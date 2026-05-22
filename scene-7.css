@@ -1,0 +1,61 @@
+/* ============================================================
+   scene-7.css — Scene 7 v2: EPIC ISLAND TERRAIN
+   ============================================================ */
+
+/* Scanline subtle */
+#canvas-container::after {
+  content:'';
+  position:fixed; inset:0; z-index:5;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 3px,
+    rgba(0,230,118,0.008) 3px, rgba(0,230,118,0.008) 4px
+  );
+  pointer-events:none;
+}
+
+/* Vignette dramatis */
+#canvas-container::before {
+  content:'';
+  position:fixed; inset:0; z-index:4;
+  background: radial-gradient(
+    ellipse 80% 80% at 50% 50%,
+    transparent 38%,
+    rgba(2,6,12,0.72) 100%
+  );
+  pointer-events:none;
+}
+
+/* GLB loader badge */
+#glb-status {
+  background:rgba(3,10,20,0.92) !important;
+  border:1px solid rgba(0,230,118,0.3) !important;
+  border-radius:12px !important;
+  backdrop-filter:blur(12px) !important;
+  color:#00e676 !important;
+  font-size:11px !important;
+}
+
+/* HUD */
+#hud { text-shadow:0 0 10px rgba(0,230,118,0.2) !important; }
+
+/* Info panel */
+#info-panel {
+  border-color:rgba(0,230,118,0.3) !important;
+  box-shadow:0 0 30px rgba(0,230,118,0.15), 0 8px 32px rgba(0,0,0,0.6) !important;
+}
+
+/* AR corners glow */
+.ar-corner { animation:s7cornerpulse 2.5s ease-in-out infinite !important; }
+@keyframes s7cornerpulse {
+  0%,100% { opacity:0.4; border-color:rgba(0,230,118,0.4); }
+  50%      { opacity:1;   border-color:#00e676; box-shadow:0 0 10px rgba(0,230,118,0.5); }
+}
+.ar-scan {
+  color:#00e676 !important;
+  text-shadow:0 0 8px rgba(0,230,118,0.8) !important;
+}
+
+/* Selection */
+::selection { background:rgba(0,230,118,0.3); color:#fff; }
+::-webkit-scrollbar { display:none; }
+* { scrollbar-width:none; }

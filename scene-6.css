@@ -1,0 +1,135 @@
+/* ============================================================
+   scene-6.css — Scene 6: Tantangan Proyek (ANIME RPG EDITION)
+   Dark sci-fi + RPG game aesthetic
+   ============================================================ */
+
+/* ── Scanline overlay ── */
+#canvas-container::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 230, 118, 0.012) 2px,
+    rgba(0, 230, 118, 0.012) 4px
+  );
+  pointer-events: none;
+  animation: s6scanline 8s linear infinite;
+}
+@keyframes s6scanline {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 100px; }
+}
+
+/* ── Vignette ── */
+#canvas-container::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  background: radial-gradient(
+    ellipse 80% 80% at 50% 50%,
+    transparent 45%,
+    rgba(3, 8, 18, 0.65) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Narasi override: glassmorphism style ── */
+#narasi {
+  background: rgba(4, 12, 22, 0.88) !important;
+  border: 1.5px solid rgba(0, 230, 118, 0.2) !important;
+  backdrop-filter: blur(16px) !important;
+  border-radius: 14px !important;
+  font-size: 12.5px !important;
+  padding: 10px 18px !important;
+  max-width: 420px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  top: 58px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
+}
+
+/* ── Nav override: glowing buttons ── */
+.nav-btn {
+  position: relative;
+  overflow: hidden;
+}
+.nav-btn.primary {
+  background: rgba(0, 230, 118, 0.15) !important;
+  border-color: rgba(0, 230, 118, 0.5) !important;
+  color: #00e676 !important;
+  box-shadow: 0 0 16px rgba(0, 230, 118, 0.18) !important;
+}
+.nav-btn.primary:hover {
+  background: rgba(0, 230, 118, 0.28) !important;
+  box-shadow: 0 0 28px rgba(0, 230, 118, 0.32) !important;
+  transform: scale(1.04);
+}
+
+/* ── HUD Scene title RPG style ── */
+#scene-title {
+  background: linear-gradient(135deg, #00e676, #42a5f5) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.5px !important;
+  filter: drop-shadow(0 0 8px rgba(0,230,118,0.4)) !important;
+}
+
+/* ── Interact UI override ── */
+#interact-ui {
+  bottom: 70px !important;
+  display: none !important; /* hidden — CTA button replaces it */
+}
+
+/* ── Info panel override ── */
+#info-panel {
+  border-color: rgba(0, 230, 118, 0.3) !important;
+  box-shadow: 0 0 30px rgba(0, 230, 118, 0.15), 0 8px 32px rgba(0,0,0,0.5) !important;
+}
+
+/* ── HUD glow enhancement ── */
+#hud {
+  text-shadow: 0 0 12px rgba(0, 230, 118, 0.3) !important;
+}
+
+/* ── AR frame pulse ── */
+.ar-corner {
+  animation: s6cornerPulse 2.5s ease-in-out infinite !important;
+}
+@keyframes s6cornerPulse {
+  0%, 100% { opacity: 0.5; border-color: rgba(0, 230, 118, 0.5); }
+  50%       { opacity: 1.0; border-color: rgba(0, 230, 118, 1.0); box-shadow: 0 0 12px rgba(0,230,118,0.6); }
+}
+
+/* ── AR scan badge ── */
+.ar-scan {
+  color: #00e676 !important;
+  text-shadow: 0 0 8px rgba(0,230,118,0.8) !important;
+  animation: s6scanBlink 1.5s ease-in-out infinite !important;
+}
+@keyframes s6scanBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+/* ── Scrollbar hide (clean RPG look) ── */
+::-webkit-scrollbar { display: none; }
+* { scrollbar-width: none; }
+
+/* ── Selection color ── */
+::selection {
+  background: rgba(0, 230, 118, 0.3);
+  color: #fff;
+}
+
+/* ── Glow pulse on body when modal open ── */
+body:has(#s6-mission-modal.open) #canvas-container {
+  filter: brightness(0.6);
+  transition: filter 0.3s ease;
+}
