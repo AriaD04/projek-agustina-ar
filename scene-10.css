@@ -1,2 +1,503 @@
-/* scene-10.css — Scene 10 */
-/* Scene-specific overrides go here */
+/* ============================================================
+   scene-10.css — Scene 10: PENUTUP — CYBER EARTH
+   ============================================================ */
+
+/* ── Outro — Cyber Earth Closing Screen ── */
+#outro {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 20px;
+  background: transparent;
+  overflow: hidden;
+}
+
+/* ── Canvas for cyber earth ── */
+#cyber-earth-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── WebGL cyber globe container ── */
+#globe-container {
+  position: relative;
+  width: min(340px, 80vw);
+  height: min(340px, 80vw);
+  margin-bottom: 20px;
+  z-index: 10;
+  cursor: grab;
+  flex-shrink: 0;
+}
+#globe-container:active {
+  cursor: grabbing;
+}
+
+/* Outer glow ring */
+#globe-container::before {
+  content: "";
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse 80% 80% at 50% 50%,
+    rgba(0, 180, 216, 0.12) 0%,
+    rgba(0, 230, 118, 0.08) 50%,
+    transparent 70%
+  );
+  animation: globeGlow 4s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+/* Orbit ring 1 */
+#globe-container::after {
+  content: "";
+  position: absolute;
+  inset: -35px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 230, 118, 0.12);
+  animation: orbitSpin1 12s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes globeGlow {
+  0% {
+    opacity: 0.6;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+@keyframes orbitSpin1 {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Orbit ring 2 */
+.orbit-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 180, 216, 0.1);
+  pointer-events: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.orbit-ring-1 {
+  width: calc(100% + 80px);
+  height: calc(100% + 80px);
+  animation: orbitSpin2 20s linear infinite reverse;
+}
+.orbit-ring-2 {
+  width: calc(100% + 140px);
+  height: calc(100% + 140px);
+  animation: orbitSpin3 30s linear infinite;
+  border-color: rgba(123, 47, 247, 0.08);
+}
+.orbit-ring-3 {
+  width: calc(100% + 200px);
+  height: calc(100% + 200px);
+  animation: orbitSpin2 45s linear infinite reverse;
+  border-color: rgba(0, 230, 118, 0.05);
+}
+
+/* Satellite dot */
+.orbit-ring-1::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: rgba(0, 230, 118, 0.9);
+  border-radius: 50%;
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 8px rgba(0, 230, 118, 0.8);
+}
+.orbit-ring-2::before {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(0, 180, 216, 0.9);
+  border-radius: 50%;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 8px rgba(0, 180, 216, 0.8);
+}
+
+@keyframes orbitSpin2 {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+@keyframes orbitSpin3 {
+  to {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+/* ── Globe canvas ── */
+#earth-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50%;
+  box-shadow:
+    0 0 40px rgba(0, 230, 118, 0.3),
+    0 0 80px rgba(0, 180, 216, 0.15),
+    inset 0 0 30px rgba(0, 0, 0, 0.8);
+  cursor: grab;
+  touch-action: none;
+}
+#earth-canvas:active {
+  cursor: grabbing;
+}
+
+/* ── Zoom controls ── */
+#zoom-controls {
+  position: absolute;
+  right: -50px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 20;
+}
+.zoom-btn {
+  width: 34px;
+  height: 34px;
+  background: rgba(0, 15, 30, 0.85);
+  border: 1px solid rgba(0, 230, 118, 0.35);
+  color: #00e676;
+  font-size: 1.2rem;
+  font-family: "Syne", monospace;
+  cursor: pointer;
+  clip-path: polygon(
+    4px 0,
+    100% 0,
+    100% calc(100% - 4px),
+    calc(100% - 4px) 100%,
+    0 100%,
+    0 4px
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  backdrop-filter: blur(8px);
+  line-height: 1;
+}
+.zoom-btn:hover {
+  background: rgba(0, 230, 118, 0.18);
+  box-shadow: 0 0 12px rgba(0, 230, 118, 0.4);
+}
+
+/* Zoom label */
+#zoom-label {
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Syne", monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: rgba(0, 230, 118, 0.5);
+  white-space: nowrap;
+}
+
+/* ── Outro Text Content ── */
+.outro-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 420px;
+}
+
+#outro h1 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(1.3rem, 4vw, 1.9rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  color: #f0f4f0;
+  text-shadow: 0 0 30px rgba(0, 230, 118, 0.4);
+  margin-bottom: 10px;
+  animation: titleReveal 1.2s cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation-delay: 0.4s;
+}
+#outro h1 span.highlight {
+  color: #00e676;
+  text-shadow: 0 0 20px rgba(0, 230, 118, 0.8);
+}
+
+@keyframes titleReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Sub-label before title */
+.outro-sublabel {
+  font-family: "Syne", monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(0, 230, 118, 0.5);
+  margin-bottom: 8px;
+  animation: titleReveal 1s both;
+  animation-delay: 0.2s;
+}
+
+#outro p {
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: rgba(200, 225, 210, 0.65);
+  letter-spacing: 0.02em;
+  margin-bottom: 22px;
+  animation: titleReveal 1s both;
+  animation-delay: 0.6s;
+}
+
+/* Divider line */
+.outro-divider {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 230, 118, 0.6),
+    transparent
+  );
+  margin: 10px auto;
+  animation: dividerExpand 1s both;
+  animation-delay: 0.5s;
+}
+@keyframes dividerExpand {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 60px;
+    opacity: 1;
+  }
+}
+
+/* ── Restart Button ── */
+#outro button {
+  background: rgba(0, 230, 118, 0.1);
+  border: 1px solid rgba(0, 230, 118, 0.4);
+  color: #00e676;
+  font-family: "Syne", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 12px 30px;
+  cursor: pointer;
+  clip-path: polygon(
+    0 8px,
+    8px 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    0 calc(100% - 8px)
+  );
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  animation: titleReveal 1s both;
+  animation-delay: 0.9s;
+}
+#outro button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 230, 118, 0.25),
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+}
+#outro button:hover::before {
+  transform: translateX(100%);
+}
+#outro button:hover {
+  background: rgba(0, 230, 118, 0.2);
+  box-shadow: 0 0 24px rgba(0, 230, 118, 0.35);
+}
+
+/* ── Background star field ── */
+#starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  animation: twinkle ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.1;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+/* ── Nebula glow ── */
+#nebula {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 50% 40% at 20% 50%,
+      rgba(0, 100, 50, 0.08) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 40% 50% at 80% 40%,
+      rgba(0, 80, 160, 0.1) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 40% at 50% 80%,
+      rgba(60, 0, 120, 0.08) 0%,
+      transparent 60%
+    );
+}
+
+/* ── Scan line at top ── */
+#s10-scanbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 230, 118, 0.8),
+    transparent
+  );
+  z-index: 50;
+  animation: scanBar 5s linear infinite;
+  pointer-events: none;
+}
+@keyframes scanBar {
+  0% {
+    top: 0;
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0.2;
+  }
+}
+
+/* ── Corner HUD brackets ── */
+.hud-corner {
+  position: fixed;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  z-index: 40;
+  border-color: rgba(0, 230, 118, 0.35);
+  border-style: solid;
+}
+.hud-corner.tl {
+  top: 16px;
+  left: 16px;
+  border-width: 2px 0 0 2px;
+}
+.hud-corner.tr {
+  top: 16px;
+  right: 16px;
+  border-width: 2px 2px 0 0;
+}
+.hud-corner.bl {
+  bottom: 16px;
+  left: 16px;
+  border-width: 0 0 2px 2px;
+}
+.hud-corner.br {
+  bottom: 16px;
+  right: 16px;
+  border-width: 0 2px 2px 0;
+}
+
+/* ── Status tags ── */
+.outro-tags {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  animation: titleReveal 1s both;
+  animation-delay: 0.75s;
+}
+.outro-tag {
+  font-family: "Syne", monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid rgba(0, 230, 118, 0.2);
+  background: rgba(0, 230, 118, 0.05);
+  color: rgba(0, 230, 118, 0.6);
+  clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+}
+
+/* ── Globe instruction tip ── */
+#globe-tip {
+  position: absolute;
+  bottom: -36px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Syne", monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.15em;
+  color: rgba(0, 230, 118, 0.4);
+  white-space: nowrap;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}

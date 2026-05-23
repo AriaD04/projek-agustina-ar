@@ -1,2 +1,330 @@
-/* scene-9.css — Scene 9 */
-/* Scene-specific overrides go here */
+/* ============================================================
+   scene-9.css — Scene 9: EVALUASI & REFLEKSI — CYBER FUTURISTIC
+   ============================================================ */
+
+/* ── Score UI — Holographic Dashboard ── */
+#score-ui {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 20px 16px 80px;
+  background: transparent;
+  pointer-events: none;
+}
+#score-ui > * { pointer-events: auto; }
+
+/* Scan-line overlay for score-ui */
+#score-ui::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0,230,118,0.015) 3px,
+      rgba(0,230,118,0.015) 4px
+    );
+  pointer-events: none;
+  animation: scanMove 8s linear infinite;
+}
+
+@keyframes scanMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100px; }
+}
+
+/* Corner brackets decoration */
+#score-ui::after {
+  content: '';
+  position: fixed;
+  inset: 20px;
+  border: 1px solid rgba(0,230,118,0.08);
+  pointer-events: none;
+  clip-path: polygon(
+    0 20px, 20px 0, calc(100% - 20px) 0, 100% 20px,
+    100% calc(100% - 20px), calc(100% - 20px) 100%,
+    20px 100%, 0 calc(100% - 20px)
+  );
+}
+
+/* ── Title ── */
+#score-ui h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(0.85rem, 2.8vw, 1.1rem);
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(0,230,118,0.9);
+  text-shadow: 0 0 20px rgba(0,230,118,0.6), 0 0 60px rgba(0,230,118,0.2);
+  margin-bottom: 4px;
+  position: relative;
+}
+#score-ui h2::before {
+  content: '// ECOSYSTEM.EVALUATION_v2.0 //';
+  display: block;
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  color: rgba(0,230,118,0.4);
+  margin-bottom: 6px;
+  font-weight: 400;
+}
+
+/* ── Score Cards ── */
+.score-cards {
+  display: flex;
+  gap: 14px;
+  margin: 16px 0 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.score-card {
+  position: relative;
+  width: 130px;
+  background: rgba(0,15,30,0.85);
+  border: 1px solid rgba(0,230,118,0.2);
+  padding: 18px 14px 14px;
+  clip-path: polygon(0 12px, 12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+  text-align: center;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.score-card:hover {
+  transform: translateY(-4px) scale(1.03);
+  border-color: rgba(0,230,118,0.5);
+}
+.score-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,230,118,0.8), transparent);
+  animation: shimmerH 3s ease-in-out infinite;
+}
+.score-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,230,118,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+@keyframes shimmerH {
+  0%, 100% { opacity: 0.3; transform: scaleX(0.3); }
+  50% { opacity: 1; transform: scaleX(1); }
+}
+
+.score-card .val {
+  font-family: 'Syne', monospace;
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #00e676;
+  text-shadow: 0 0 20px rgba(0,230,118,0.8), 0 0 40px rgba(0,230,118,0.4);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 1;
+}
+.score-card .lbl {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(200,230,210,0.55);
+  margin-top: 8px;
+  line-height: 1.4;
+  position: relative;
+  z-index: 1;
+}
+
+/* Animated ring around val */
+.score-card .val::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border: 1px solid rgba(0,230,118,0.15);
+  border-radius: 50%;
+  animation: spin 4s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Reflection Question ── */
+.reflect-q {
+  background: rgba(0,15,30,0.7);
+  border: 1px solid rgba(0,230,118,0.12);
+  border-left: 3px solid rgba(0,230,118,0.6);
+  padding: 12px 18px;
+  font-size: 0.8rem;
+  color: rgba(200,230,210,0.7);
+  font-style: italic;
+  letter-spacing: 0.03em;
+  max-width: 420px;
+  margin-bottom: 18px;
+  position: relative;
+  backdrop-filter: blur(6px);
+}
+.reflect-q::before {
+  content: 'REFLEKSI_SISTEM';
+  display: block;
+  font-style: normal;
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  color: rgba(0,230,118,0.5);
+  margin-bottom: 6px;
+  font-family: 'Syne', monospace;
+}
+
+/* ── Animated BG Particles for Scene 9 ── */
+#s9-particles {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.s9-dot {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: rgba(0,230,118,0.6);
+  animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(-20px) scale(1); opacity: 0; }
+}
+
+/* ── Holographic grid lines ── */
+#s9-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(0,230,118,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,230,118,0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridPulse 4s ease-in-out infinite alternate;
+}
+@keyframes gridPulse {
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* ── Data stream vertical lines ── */
+#s9-datastream {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.data-line {
+  position: absolute;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(0,230,118,0.4) 50%, transparent);
+  animation: dataFall linear infinite;
+}
+@keyframes dataFall {
+  0% { top: -100%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 0.5; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* ── Radar scan ring ── */
+#s9-radar {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  border: 1px solid rgba(0,230,118,0.05);
+  animation: radarPulse 5s ease-in-out infinite;
+}
+#s9-radar::before {
+  content: '';
+  position: absolute;
+  inset: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,230,118,0.04);
+}
+#s9-radar::after {
+  content: '';
+  position: absolute;
+  inset: 80px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,230,118,0.03);
+}
+@keyframes radarPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.5; }
+  50% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+}
+
+/* ── Nav btn override for scene 9 ── */
+#score-ui .nav-btn.primary {
+  background: rgba(0,230,118,0.12);
+  border: 1px solid rgba(0,230,118,0.45);
+  color: #00e676;
+  font-family: 'Syne', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  clip-path: polygon(0 8px, 8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px));
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+#score-ui .nav-btn.primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(0,230,118,0.2) 50%, transparent 100%);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+}
+#score-ui .nav-btn.primary:hover::before {
+  transform: translateX(100%);
+}
+#score-ui .nav-btn.primary:hover {
+  background: rgba(0,230,118,0.22);
+  box-shadow: 0 0 20px rgba(0,230,118,0.3);
+}
+
+/* ── HEX badge counters ── */
+.s9-hex-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 480px;
+}
+.s9-hex {
+  background: rgba(0,230,118,0.06);
+  border: 1px solid rgba(0,230,118,0.18);
+  padding: 5px 12px;
+  font-family: 'Syne', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(0,230,118,0.7);
+  clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 6px 100%, 0 50%);
+}
